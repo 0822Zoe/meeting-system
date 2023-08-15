@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<style type="text/css">
+			#show img{
+				border-radius: 50%;
+				width: 150px;
+				height: 150px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h2 class="page-header">
+				人员管理
+				<small>员工注册</small>
+			</h2>
+			<fieldset id="">
+				<legend>员工信息</legend>
+				<form class="form-horizontal col-md-8">
+				<div class="form-group">
+					<label for="" class="col-md-2">请选择头像</label>
+					<div class="col-md-10">
+						<input id="image" type="file" placeholder="请选择头像" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-md-2">姓名</label>
+					<div class="col-md-10">
+						<input type="text" placeholder="请输入用户名" class="form-control"/>
+					</div>					
+				</div>
+				<div class="form-group">
+					<label for="" class="col-md-2">账号名</label>
+					<div class="col-md-10">
+						<input type="text" placeholder="请输入账号名" class="form-control"
+							id="username" name="username"/>
+						<span id="showMsg">
+						
+						</span>
+					</div>
+					
+				</div>
+				<div class="form-group">
+					<label for="" class="col-md-2">密码</label>
+					<div class="col-md-10">
+						<input type="password" placeholder="请输入密码" class="form-control"/>
+					</div>					
+				</div>
+				<div class="form-group">
+					<label for="" class="col-md-2">确认密码</label>
+					<div class="col-md-10">
+						<input type="password" placeholder="请确认密码" class="form-control"/>
+					</div>					
+				</div>
+				<div class="form-group">
+					<label for="" class="col-md-2">联系电话</label>
+					<div class="col-md-10">
+						<input type="text" placeholder="请输入联系电话" class="form-control"/>
+					</div>					
+				</div>
+				<div class="form-group">
+					<label for="" class="col-md-2">电子邮件</label>
+					<div class="col-md-10">
+						<input type="text" placeholder="请输入电子邮件" class="form-control"/>
+					</div>					
+				</div>
+				<div class="form-group">
+					<label for="" class="col-md-2">所在部门</label>
+					<div class="col-md-10">
+						<select name="" id="" class="form-control">
+							<option value="">技术部</option>
+							<option value="">市场部</option>
+							<option value="">社招部</option>
+							<option value="">行政部</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">					
+					<div class="col-md-10 col-md-offset-2">
+						<input type="button"  value="注册" class="btn btn-success"/>
+						<input type="button"  value="重置" class="btn btn-danger"/>
+					</div>
+				</div>
+				</form>
+				<div class="col-md-2">
+					<div id="show">
+						<img src="" alt="请选择上传的头像图片" id="pic"/>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<!--引入jquery-->
+		<script src="js/jquery.min.js"></script>
+		<!--引入bootstrap的js功能-->
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/pic.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function () {
+				$("#username").blur(function () {
+					var username = $("#username").val();
+					// 空校验
+					if (username == null || username == "") {
+						$("#showMsg").html("请输入账号名哦~~~").css("color","red");
+						return;
+					} else{
+						$("#showMsg").html("");
+					}
+					
+					// 内容校验
+					$.getJSON("check.json",{username:$("#username").val()},function (data) {
+						var i;
+						for (i = 0; i < data.username.length; i++) {
+							if (username == data.username[i]) {
+								$("#showMsg").html("账号不可用").css("color","red");
+								break;
+							} else{
+								$("#showMsg").html("账号名可用").css("color","green");
+							}
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+</html>
